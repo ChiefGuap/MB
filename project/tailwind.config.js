@@ -1,0 +1,91 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        sage: '#8FBC8F',
+        calmBlue: '#89CFF0',
+        lavender: '#E6E6FA',
+        peach: '#FFDAB9',
+        primary: {
+          50: '#F0F9F0',
+          100: '#DCF0DC',
+          200: '#C0E0C0',
+          300: '#A9D3A9',
+          400: '#9CCF9C',
+          500: '#8FBC8F',
+          600: '#71A671',
+          700: '#598A59',
+          800: '#436E43',
+          900: '#355935',
+        },
+        secondary: {
+          50: '#EAF7FD',
+          100: '#D1EEFB',
+          200: '#B0E0F7',
+          300: '#89CFF0',
+          400: '#62B9E4',
+          500: '#4AA3D5',
+          600: '#3585B7',
+          700: '#276896',
+          800: '#1D5272',
+          900: '#153E57',
+        },
+        accent: {
+          50: '#F9F9FE',
+          100: '#F0F0FD',
+          200: '#E6E6FA',
+          300: '#D1D1F5',
+          400: '#B9B9EE',
+          500: '#A3A3E7',
+          600: '#8080DE',
+          700: '#6060D6',
+          800: '#4040CE',
+          900: '#2929A3',
+        },
+        success: {
+          500: '#10B981',
+          600: '#059669',
+        },
+        warning: {
+          500: '#F59E0B',
+          600: '#D97706',
+        },
+        error: {
+          500: '#EF4444',
+          600: '#DC2626',
+        },
+        neutral: {
+          50: '#F9FAFB',
+          100: '#F3F4F6',
+          200: '#E5E7EB',
+          300: '#D1D5DB',
+          400: '#9CA3AF',
+          500: '#6B7280',
+          600: '#4B5563',
+          700: '#374151',
+          800: '#1F2937',
+          900: '#111827',
+        },
+      },
+      spacing: {
+        '128': '32rem',
+        '144': '36rem',
+      },
+      fontFamily: {
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+      },
+      boxShadow: {
+        'soft': '0 2px 15px rgba(0, 0, 0, 0.05)',
+        'medium': '0 4px 20px rgba(0, 0, 0, 0.1)',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in forwards',
+        'slide-up': 'slideUp 0.5s ease-out forwards',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+    },
+  },
+  plugins: [],
+};
