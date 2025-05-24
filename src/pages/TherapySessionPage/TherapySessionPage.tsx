@@ -155,7 +155,6 @@ const TherapySessionPage: React.FC = () => {
       }
     } catch (error) {
       console.error('Error generating response:', error);
-      // Handle error appropriately
     }
   };
   
@@ -182,11 +181,136 @@ const TherapySessionPage: React.FC = () => {
     }
   };
 
-  // Rest of the component remains the same...
-  // (Previous JSX structure and UI components remain unchanged)
-
   return (
-    // Previous JSX structure remains the same...
+    <div className="min-h-screen pt-16 pb-6 bg-neutral-50">
+      <motion.div 
+        className="container-fluid h-full"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0 },
+          visible: { opacity: 1, transition: { duration: 0.5 } }
+        }}
+      >
+        {!isSessionStarted ? (
+          <div className="max-w-2xl mx-auto py-20">
+            <motion.div
+              className="text-center mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">
+                Ready for Your Therapy Session?
+              </h1>
+              <p className="text-lg text-gray-700">
+                Take a moment to find a quiet, private space before beginning your session.
+              </p>
+            </motion.div>
+            
+            <motion.div
+              className="bg-white rounded-lg shadow-md p-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <button
+                onClick={startSession}
+                className="w-full btn btn-primary py-4 text-lg font-medium"
+              >
+                Begin Session
+              </button>
+            </motion.div>
+          </div>
+        ) : (
+          <div className="h-[calc(100vh-80px)] flex flex-col">
+            <div className="bg-white shadow-sm border-b border-gray-200 py-4">
+              <div className="container-fluid">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center">
+                    <h1 className="text-xl font-semibold text-gray-900">Therapy Session</h1>
+                    {currentEmotion && (
+                      <div className="ml-4 flex items-center bg-gray-100 px-3 py-1 rounded-full">
+                        <EmotionIndicator emotion={currentEmotion} confidence={emotionConfidence} />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <button 
+                      onClick={() => setIsMicOn(!isMicOn)}
+                      className={`p-2 rounded-full ${isMicOn ? 'bg-gray-100 text-gray-700' : 'bg-red-100 text-red-600'}`}
+                    >
+                      {isMicOn ? <Mic className="h-5 w-5" /> : <MicOff className="h-5 w-5" />}
+                    </button>
+                    <button 
+                      onClick={() => setIsCameraOn(!isCameraOn)}
+                      className={`p-2 rounded-full ${isCameraOn ? 'bg-gray-100 text-gray-700' : 'bg-red-100 text-red-600'}`}
+                    >
+                      {isCameraOn ? <Camera className="h-5 w-5" /> : <CameraOff className="h-5 w-5" />}
+                    </button>
+                    <button 
+                      onClick={endSession}
+                      className="p-2 rounded-full bg-red-100 text-red-600"
+                    >
+                      <X className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex-1 flex">
+              {/* Webcam Feed */}
+              <div className="w-1/2 p-4">
+                {isCameraOn ? (
+                  <Webcam
+                    ref={webcamRef}
+                    audio={false}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gray-100 rounded-lg">
+                    <CameraOff className="h-12 w-12 text-gray-400" />
+                  </div>
+                )}
+              </div>
+
+              {/* Chat Interface */}
+              <div className="w-1/2 p-4 flex flex-col">
+                <div 
+                  ref={chatContainerRef}
+                  className="flex-1 overflow-y-auto space-y-4 p-4"
+                >
+                  {messages.map(message => (
+                    <ChatMessage key={message.id} message={message} />
+                  ))}
+                </div>
+                
+                <div className="p-4 border-t border-gray-200">
+                  <div className="relative">
+                    <textarea
+                      value={inputMessage}
+                      onChange={(e) => setInputMessage(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      placeholder="Type or speak your message..."
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2 pr-12"
+                      rows={3}
+                    />
+                    <button
+                      onClick={handleSendMessage}
+                      disabled={!inputMessage.trim()}
+                      className="absolute right-2 bottom-2 p-2 rounded-full bg-sage text-white disabled:opacity-50"
+                    >
+                      <Send className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </motion.div>
+    </div>
   );
 };
 
